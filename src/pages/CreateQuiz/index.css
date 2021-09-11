@@ -1,0 +1,32 @@
+.formContainer{
+    height: 10rem;
+    padding: 1rem;
+    max-width: 1200px;
+}
+.formbox{
+    background-color: #f2f2f2;
+    border: solid;
+    border-color: gray;
+    height: 8rem;
+    padding: 2rem;
+}
+.inp {
+    text-align: left;
+    background: transparent;
+    border:none;
+    border-bottom: 1px solid black;
+    font-size: 1.5rem;
+    padding: 0.1rem 0.2rem;
+    outline: none;
+ }
+ .linp {
+    text-align: left;
+    background: transparent;
+    border:none;
+    font-size: 1.5rem;
+    padding: 0.1rem 0.2rem;
+    outline: none;
+ }
+ .inplabel{
+     font-size: 1.5rem;
+ }

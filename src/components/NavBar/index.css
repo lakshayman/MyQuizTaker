@@ -1,0 +1,29 @@
+.color
+{	
+    background-color: lightseagreen; 
+}
+.textcolor
+{
+    color: #fff !important;
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+.ho:hover{
+    color: black !important;
+}
+.si{
+    font-size: 2rem;
+}
+.si:hover{
+    transform: scale(1.1) !important;
+}
+.nbutton{
+    background-color: transparent;
+    border: solid;
+    color: #fff;
+    border-color: black;
+}
+.nbutton:hover{
+    color: black;
+    border-color: #fff;
+}
