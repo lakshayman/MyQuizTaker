@@ -5,8 +5,16 @@ import {
   ADDELEMENT,
   SET_CURRENT_TITLE,
   SET_CURRENT_USER,
-  CHANGEQUESTION
+  CHANGEQUESTION,
+  SET_ELEMENTS
 } from "../Constants";
+
+export const setElements = (elements) => {
+  return {
+    type: SET_ELEMENTS,
+    payload: elements
+  }
+}
 
 export const loginUser = (userData, setErrorTrue) => dispatch => {
   axios

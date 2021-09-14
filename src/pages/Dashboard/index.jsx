@@ -5,6 +5,7 @@ import { logoutUser } from "../../actions/authActions";
 import NavBar from "../../components/NavBar";
 import axios from 'axios';
 import "./index.css";
+import { Link } from "react-router-dom";
 function Dashboard(props) {
   const { user } = props.auth;
 
@@ -15,6 +16,23 @@ function Dashboard(props) {
     e.preventDefault();
     props.logoutUser();
   };
+
+  const deleteQuiz = (qid) => {
+    setLoading(true);
+    axios
+      .post("http://localhost:8000/api/deleteQuiz", {
+        userId: user.userId,
+        quizId: qid
+      })
+      .then(res => {
+        console.log(res);
+        window.location.href = '/';
+      })
+      .catch(err =>{
+        alert(err);
+      })
+    setLoading(false);
+  }
     useEffect(()=>{
       setLoading(true);
       axios
@@ -39,12 +57,13 @@ return (
     <div className="container-fluid con">
       <ul className="cards">
     {quizes.map((quiz, index) => 
-        ( <li className="cards_item">
+        (<li className="cards_item" key={index}>
           <div className="card">
             <div className="card_content">
-              <h2 className="card_title">{index}</h2>
+              <i className="fa fa-trash" style={{color: "white", cursor: "pointer"}} onClick={()=>deleteQuiz(index)}></i>
+              <h2 className="card_title">Quiz ID: {index}</h2>
               <p className="card_text">{quiz.title}</p>
-              <button className="btn card_btn">Edit Quiz</button>
+              <Link className="btn card_btn" to={`/editQuiz/${index}`}>Edit Quiz</Link>
             </div>
           </div>
         </li>

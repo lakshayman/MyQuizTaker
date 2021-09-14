@@ -1,24 +1,28 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { connect, useDispatch } from "react-redux";
-import { logoutUser, addElement, setTitle } from "../../actions/authActions";
+import { logoutUser, addElement, setTitle, setElements } from "../../actions/authActions";
 import NavBar from "../../components/NavBar";
 import axios from 'axios';
 import "./index.css";
 import QuizInput from '../../components/QuizInput';
-import { useHistory } from "react-router";
+import { useHistory, useParams } from "react-router";
 function Edit(props) {
+  let { index } = useParams();
   const { user } = props.auth;
+  console.log(user);
   const history = useHistory();
   const dispatch = useDispatch();
   const [isLoading, setLoading] = useState(false);
-  const [quizId, setQuizId] = useState(-1);
-  const [title, setTitle] = useState(user.currentQuizTitle);
-  const [formData,updateData] = useState(user.currentElements);
+  const [quizId, setQuizId] = useState(index);
+  const [quiz, setQuiz] = useState({
+    title: 'title',
+    quizElements: []
+  });
   const [formElements, updateElement] = useState([]);
   const updateFormElements = ()=>{
     let temp = [];
-    formData.map((ele, index) =>{
+    quiz.quizElements.map((ele, index) =>{
       if(ele.type === 'input'){
         temp.push(<QuizInput name='question' key={index} ukey={index} isEditing={false} isCreating={true}/>);
       }
@@ -31,27 +35,28 @@ function Edit(props) {
   };
   const handleChange = (e) => {
     dispatch(props.setTitle(e.target.value));
-    setTitle(e.target.value);
+    setQuiz(prev => ({...prev, title: e.target.value}));
   }
   const handleClick = () => {
-    dispatch(addElement({type: 'input', question: 'Question'}));
-    updateData(prev => [...prev, {type: 'input', question: 'Question'}])
+    dispatch(addElement({type: 'input', question: 'Question'}))
+    setQuiz(prev => ({...prev, quizElements: [...prev.quizElements, {type: 'input', question: 'Question'}]}));
   }
   const handleSubmit = () => {
     setLoading(true);
     axios
-        .post("http://localhost:8000/api/addQuiz", {
-          userId: user.userId,
-          title: user.currentQuizTitle,
-          quizElements: user.currentElements
-        })
-        .then(res => {
-          window.location.href = '/';
-        })
-        .catch(err =>{
-          alert(err);
-        })
-      setLoading(false)
+      .post("http://localhost:8000/api/editQuiz", {
+        userId: user.userId,
+        quizId: quizId,
+        title: user.currentQuizTitle,
+        quizElements: user.currentElements
+      })
+      .then(res => {
+        window.location.href = '/';
+      })
+      .catch(err =>{
+        alert(err);
+      })
+    setLoading(false)
   }
   useEffect(()=>{
     setLoading(true);
@@ -60,23 +65,25 @@ function Edit(props) {
         userId: user.userId
       })
       .then(res => {
-        setQuizId(res.data.quizes.length);
+        dispatch(props.setTitle(res.data.quizes[index].title));
+        dispatch(props.setElements(res.data.quizes[index].quizElements));
+        setQuiz(prev => ({...prev, title: res.data.quizes[index].title, quizElements: res.data.quizes[index].quizElements}))
       })
       .catch(err =>{
         alert(err);
       })
-      setLoading(false);
+    setLoading(false);
   },[]);
   useEffect(()=>{
     updateFormElements();
-  },[formData])
+  },[quiz])
     console.log(user);
 return (
   <>
   {isLoading && <div className="loading"></div>}
   <NavBar onLogoutClick={onLogoutClick}/>
   <div className="container">
-    <input className="input-lg linp" value={title} onChange={handleChange}/>
+    <input className="input-lg linp" value={quiz.title} onChange={handleChange}/>
     {quizId !== -1 && <p>{quizId}</p>}
     {formElements.map(element=>element)}
     <button onClick={handleClick}>Add</button>
@@ -95,5 +102,5 @@ const mapStateToProps = state => ({
 });
 export default connect(
   mapStateToProps,
-  { logoutUser, addElement, setTitle }
+  { logoutUser, addElement, setTitle, setElements }
 )(Edit);

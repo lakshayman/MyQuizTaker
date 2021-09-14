@@ -33,7 +33,7 @@ class App extends Component {
             <Switch>
               <PrivateRoute exact path="/dashboard" component={Dashboard} />
               <PrivateRoute exact path="/create" component={create} />
-              <PrivateRoute exact path="/editQuiz/:id/:userId" component={edit} />
+              <PrivateRoute exact path="/editQuiz/:index" component={edit} />
             </Switch>
             </HashRouter>
           </div>

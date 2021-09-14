@@ -2,7 +2,8 @@ import {
     SET_CURRENT_USER,
     SET_CURRENT_TITLE,
     ADDELEMENT,
-    CHANGEQUESTION
+    CHANGEQUESTION,
+    SET_ELEMENTS
   } from "../Constants";
   const isEmpty = require("is-empty");
   const initialState = {
@@ -36,6 +37,11 @@ import {
         }
       case CHANGEQUESTION:
         state.user.currentElements[action.payload.key].question = action.payload.question;
+        return {
+          ...state
+        }
+      case SET_ELEMENTS:
+        state.user.currentElements = action.payload;
         return {
           ...state
         }
