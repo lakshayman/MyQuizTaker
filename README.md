@@ -19,7 +19,7 @@ Go to: https://github.com/lakshayman/quizTakerBackend
 10) Enter Command "npm install" to install deoendencies.
 11) Wait for task to complete.
 12) Enter Command "npm start" to run the app.
-13) To install back-end, visit the given link: https://github.com/RahulGoyal-tech/quizTakerBackend/blob/main/README.md
+13) To install back-end, visit the given link: https://github.com/lakshayman/quizTakerBackend/blob/main/README.md
 
 ## Available Scripts
 
