@@ -1,0 +1,21 @@
+{
+  "files": {
+    "main.css": "/MyQuizTaker/static/css/main.c6d57a79.chunk.css",
+    "main.js": "/MyQuizTaker/static/js/main.a6fb742f.chunk.js",
+    "main.js.map": "/MyQuizTaker/static/js/main.a6fb742f.chunk.js.map",
+    "runtime-main.js": "/MyQuizTaker/static/js/runtime-main.d5cb2bca.js",
+    "runtime-main.js.map": "/MyQuizTaker/static/js/runtime-main.d5cb2bca.js.map",
+    "static/js/2.25d50c46.chunk.js": "/MyQuizTaker/static/js/2.25d50c46.chunk.js",
+    "static/js/2.25d50c46.chunk.js.map": "/MyQuizTaker/static/js/2.25d50c46.chunk.js.map",
+    "index.html": "/MyQuizTaker/index.html",
+    "static/css/main.c6d57a79.chunk.css.map": "/MyQuizTaker/static/css/main.c6d57a79.chunk.css.map",
+    "static/js/2.25d50c46.chunk.js.LICENSE.txt": "/MyQuizTaker/static/js/2.25d50c46.chunk.js.LICENSE.txt",
+    "static/media/index.css": "/MyQuizTaker/static/media/bg.493c5fd8.jpg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.d5cb2bca.js",
+    "static/js/2.25d50c46.chunk.js",
+    "static/css/main.c6d57a79.chunk.css",
+    "static/js/main.a6fb742f.chunk.js"
+  ]
+}
