@@ -8,6 +8,7 @@ import {
   CHANGEQUESTION,
   SET_ELEMENTS
 } from "../Constants";
+import { serverURL } from "../ServerConst";
 
 export const setElements = (elements) => {
   return {
@@ -18,7 +19,7 @@ export const setElements = (elements) => {
 
 export const loginUser = (userData, setErrorTrue) => dispatch => {
   axios
-    .post("http://localhost:8000/api/login", userData)
+    .post(serverURL + "api/login", userData)
     .then(res => {
       const { token } = res.data;
       localStorage.setItem("jwtToken", token);

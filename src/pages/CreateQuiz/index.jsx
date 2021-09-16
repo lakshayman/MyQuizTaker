@@ -7,6 +7,7 @@ import axios from 'axios';
 import "./index.css";
 import QuizInput from '../../components/QuizInput';
 import { useHistory } from "react-router";
+import { serverURL } from "../../ServerConst";
 function Create(props) {
   const { user } = props.auth;
   const history = useHistory();
@@ -40,13 +41,13 @@ function Create(props) {
   const handleSubmit = () => {
     setLoading(true);
     axios
-        .post("http://localhost:8000/api/addQuiz", {
+        .post(serverURL + "api/addQuiz", {
           userId: user.userId,
           title: user.currentQuizTitle,
           quizElements: user.currentElements
         })
         .then(res => {
-          window.location.href = '/';
+          window.location.href = '/MyQuizTaker/#/';
         })
         .catch(err =>{
           alert(err);
@@ -56,7 +57,7 @@ function Create(props) {
   useEffect(()=>{
     setLoading(true);
     axios
-      .post("http://localhost:8000/api/getQuizes", {
+      .post(serverURL + "api/getQuizes", {
         userId: user.userId
       })
       .then(res => {
@@ -76,11 +77,11 @@ return (
   {isLoading && <div className="loading"></div>}
   <NavBar onLogoutClick={onLogoutClick}/>
   <div className="container">
-    <input className="input-lg linp" value={title} onChange={handleChange}/>
-    {quizId !== -1 && <p>{quizId}</p>}
+    {quizId !== -1 && <p className="mt-3 display-6">Quiz No. {quizId}</p>}
+    <input className="input-lg linp mt-3" value={title} onChange={handleChange}/>
     {formElements.map(element=>element)}
-    <button onClick={handleClick}>Add</button>
-    <button onClick={handleSubmit}>Submit</button>
+    <button className="m-3 rounded b" onClick={handleClick}>Add</button>
+    <button className="m-3 rounded b" onClick={handleSubmit}>Submit</button>
   </div>
   </>
 );

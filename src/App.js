@@ -11,6 +11,7 @@ import edit from "./pages/EditQuiz";
 import PrivateRoute from './privateRoute';
 import LoginPage from "./pages/Login";
 import registerPage from "./pages/Register";
+import Quiz from "./pages/Quiz";
 if (localStorage.jwtToken) {
   const token = localStorage.jwtToken;
   setAuthToken(token);
@@ -30,6 +31,7 @@ class App extends Component {
             <HashRouter basename="/">
             <Route exact path="/" component={LoginPage} />
             <Route exact path="/register" component={registerPage} />
+            <Route exact path="/quiz/:id" component={Quiz} />
             <Switch>
               <PrivateRoute exact path="/dashboard" component={Dashboard} />
               <PrivateRoute exact path="/create" component={create} />

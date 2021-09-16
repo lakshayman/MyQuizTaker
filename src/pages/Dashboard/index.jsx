@@ -6,6 +6,7 @@ import NavBar from "../../components/NavBar";
 import axios from 'axios';
 import "./index.css";
 import { Link } from "react-router-dom";
+import { serverURL } from "../../ServerConst";
 function Dashboard(props) {
   const { user } = props.auth;
 
@@ -20,13 +21,13 @@ function Dashboard(props) {
   const deleteQuiz = (qid) => {
     setLoading(true);
     axios
-      .post("http://localhost:8000/api/deleteQuiz", {
+      .post(serverURL + "api/deleteQuiz", {
         userId: user.userId,
         quizId: qid
       })
       .then(res => {
         console.log(res);
-        window.location.href = '/';
+        window.location.href = '/MyQuizTaker/#/';
       })
       .catch(err =>{
         alert(err);
@@ -36,7 +37,7 @@ function Dashboard(props) {
     useEffect(()=>{
       setLoading(true);
       axios
-        .post("http://localhost:8000/api/getQuizes", {
+        .post(serverURL + "api/getQuizes", {
           userId: user.userId
         })
         .then(res => {

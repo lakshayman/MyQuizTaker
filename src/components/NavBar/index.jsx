@@ -6,7 +6,7 @@ function NavBar(props){
     return (
       <nav className="navbar sticky-top navbar-expand-lg navbar-dark color px-4">
         <div className="container-fluid">
-          <a className="navbar-brand textcolor si" href="/">QuizTaker</a>
+          <a className="navbar-brand textcolor si" href="/MyQuizTaker/#/">QuizTaker</a>
           <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
             <span className="navbar-toggler-icon"></span>
           </button>

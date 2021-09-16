@@ -7,6 +7,7 @@ import axios from 'axios';
 import "./index.css";
 import QuizInput from '../../components/QuizInput';
 import { useHistory, useParams } from "react-router";
+import { serverURL } from "../../ServerConst";
 function Edit(props) {
   let { index } = useParams();
   const { user } = props.auth;
@@ -19,6 +20,10 @@ function Edit(props) {
     title: 'title',
     quizElements: []
   });
+  const [responseTitle, setRT] = useState('');
+  const [responseEle, setRE] = useState([]);
+  const [buttons, setButtons] = useState([]);
+  const [responses, setResponses] = useState([]);
   const [formElements, updateElement] = useState([]);
   const updateFormElements = ()=>{
     let temp = [];
@@ -29,10 +34,34 @@ function Edit(props) {
     });
     updateElement(temp);
   }
+  const updateResponseElements = (res) => {
+    let temp = [];
+    quiz.quizElements.map((ele, index) =>{
+      temp.push(<div className="formContainer">
+            <form className="formbox rounded d-flex flex-column justify-content-around">
+                <input name={props.name} className="input-lg linp" value={ele.question} disabled={true}/>
+                <input className="input-lg inp" value={res[`input${index}`]} disabled={true}/>
+            </form>
+        </div>)
+    });
+    setRE(temp);
+  }
+  const updateButtons = ()=>{
+    let temp = [];
+    responses.map((res,index)=>{
+      temp.push(<button className="rounded m-3 b" onClick={rbClick} name={index}>{`Response ${index}`}</button>)
+    })
+    setButtons(temp);
+  }
   const onLogoutClick = e => {
     e.preventDefault();
     props.logoutUser();
   };
+  const rbClick = (e)=>{
+    let response = responses[e.target.name].response;
+    setRT(quiz.title);
+    updateResponseElements(response);
+  }
   const handleChange = (e) => {
     dispatch(props.setTitle(e.target.value));
     setQuiz(prev => ({...prev, title: e.target.value}));
@@ -44,14 +73,14 @@ function Edit(props) {
   const handleSubmit = () => {
     setLoading(true);
     axios
-      .post("http://localhost:8000/api/editQuiz", {
+      .post(serverURL + "api/editQuiz", {
         userId: user.userId,
         quizId: quizId,
         title: user.currentQuizTitle,
         quizElements: user.currentElements
       })
       .then(res => {
-        window.location.href = '/';
+        window.location.href = '/MyQuizTaker/#/';
       })
       .catch(err =>{
         alert(err);
@@ -61,7 +90,7 @@ function Edit(props) {
   useEffect(()=>{
     setLoading(true);
     axios
-      .post("http://localhost:8000/api/getQuizes", {
+      .post(serverURL + "api/getQuizes", {
         userId: user.userId
       })
       .then(res => {
@@ -71,23 +100,43 @@ function Edit(props) {
       })
       .catch(err =>{
         alert(err);
+      });
+    axios
+      .post(serverURL + "api/getResponses",{
+        userId: user.userId,
+        quizId: quizId
+      }).then(res => {
+        setResponses(res.data.responses);
+      }).catch(err => {
+        alert(err);
       })
     setLoading(false);
   },[]);
   useEffect(()=>{
     updateFormElements();
   },[quiz])
+  useEffect(()=>{
+    updateButtons();
+  },[responses])
     console.log(user);
 return (
   <>
   {isLoading && <div className="loading"></div>}
   <NavBar onLogoutClick={onLogoutClick}/>
   <div className="container">
-    <input className="input-lg linp" value={quiz.title} onChange={handleChange}/>
-    {quizId !== -1 && <p>{quizId}</p>}
+    {quizId !== -1 && <p className="mt-3 display-5">{quizId}</p>}
+    <a href={`${new URL(window.location.href).origin}/MyQuizTaker/#/quiz/${user.userId}&${quizId}`} target="_blank">{`${new URL(window.location.href).origin}/MyQuizTaker/#/quiz/${user.userId}&${quizId}`}</a>
+    <input className="input-lg linp mt-3" value={quiz.title} onChange={handleChange}/>
     {formElements.map(element=>element)}
-    <button onClick={handleClick}>Add</button>
-    <button onClick={handleSubmit}>Submit</button>
+    <button className="m-3 rounded b" onClick={handleClick}>Add</button>
+    <button className="m-3 rounded b" onClick={handleSubmit}>Submit</button>
+  </div>
+  <div className="container">
+    <div className="responsesButtonCont">
+      {buttons}
+    </div>
+    <h1>{responseTitle}</h1>
+    {responseEle.map(element=>element)}
   </div>
   </>
 );

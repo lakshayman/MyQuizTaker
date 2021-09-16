@@ -2,6 +2,7 @@ import './index.css';
 import axios from 'axios';
 import React, { useState } from 'react';
 import {Link, useHistory} from 'react-router-dom';
+import { serverURL } from '../../ServerConst';
 var mailformat = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
 function RegisterPage(){
   const history = useHistory();
@@ -75,7 +76,7 @@ function RegisterPage(){
     const handleSubmit = ()=>{
       setLoading(true);
       axios
-        .post("http://localhost:8000/api/register", {
+        .post(serverURL + "api/register", {
           name: registerData.rname,
           emailid: registerData.remail,
           password: registerData.rpass, 
