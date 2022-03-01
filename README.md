@@ -1,4 +1,4 @@
-# Getting Started with QUIZ TAKER
+# QUIZ TAKER
 
 This project's purpose is to provide a begginer-friendly platform to set-up and attempt
 online quizzes with an easy. This is the front-end part of quizTaker, to install the back-end
